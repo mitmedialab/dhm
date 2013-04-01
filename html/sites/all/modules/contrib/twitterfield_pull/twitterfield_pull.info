@@ -1,0 +1,15 @@
+name = Twitterfield Pull
+description = Get tweets for Twitter field and stores them in the database.
+core = 7.x
+
+files[] = views/twitterfield_pull_views_handler_filters.inc
+files[] = views/twitterfield_pull_views_handler_fields.inc
+
+dependencies[] = job_scheduler
+
+; Information added by drupal.org packaging script on 2012-11-14
+version = "7.x-2.0-beta3"
+core = "7.x"
+project = "twitterfield_pull"
+datestamp = "1352908096"
+

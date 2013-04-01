@@ -1,0 +1,181 @@
+<?php
+
+/**
+ * @file
+ * The Twitterfield Pull module.
+ */
+
+define('TWITTERFIELD_PULL_ADMIN_PATH', 'admin/config/media/twitterfield_full');
+define('TWITTERFIELD_PULL_HOST', 'http://twitter.com');
+define('TWITTERFIELD_PULL_API', 'https://api.twitter.com');
+define('TWITTERFIELD_PULL_SEARCH', 'http://search.twitter.com');
+define('TWITTERFIELD_PULL_TINYURL', 'http://tinyurl.com');
+define('TWITTERFIELD_PULL_TABLE', 'twitterfield_pull_tweet');
+define('TWITTERFIELD_PULL_URL', 'twitter.com');
+
+
+/**
+ * Implements hook_init().
+ */
+function twitterfield_pull_init() {
+  // Include Twitter Field API.
+  module_load_include('inc', 'twitterfield_pull', 'twitterfield_pull.api');
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function twitterfield_pull_permission() {
+  return array(
+    'administer twitterfield pull' => array(
+      'title' => t('Administer Twitterfield Pull'),
+      'description' => t('Enable or disable which twitter field need to be pull'),
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_help().
+ */
+function twitterfield_pull_help($path, $arg) {
+  switch ($path) {
+    case TWITTERFIELD_PULL_ADMIN_PATH:
+      $output = '<p>' . t('This page lists all the <em>twitter fields</em> that are currently pulled into this system.') . '</p>';
+      return $output;
+  }
+}
+
+
+/**
+ * Implements hook_menu().
+ */
+function twitterfield_pull_menu() {
+  $items[TWITTERFIELD_PULL_ADMIN_PATH . '/batch'] = array(
+    'title' => 'Twitterfield Pull Batch',
+    'description' => 'Pull all the tweets in batch',
+    'page callback' => 'twitterfield_pull_bacth',
+    'access arguments' => array('administer twitterfield pull'),
+    'type'             => MENU_LOCAL_TASK,
+  );
+  $items[TWITTERFIELD_PULL_ADMIN_PATH] = array(
+    'title' => 'Twitterfield Pull',
+    'description' => 'Enable and disable which content type and twitter fields need to be pulled.',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('twitterfield_pull_admin_settings'),
+    'access arguments' => array('administer twitterfield pull'),
+    'type'             => MENU_NORMAL_ITEM,
+    'file' => 'twitterfield_pull.admin.inc',
+  );
+  return $items;
+}
+
+
+/**
+ * Implements hook_views_api().
+ */
+function twitterfield_pull_views_api() {
+  return array(
+    'api' => 2.0,
+    'path' => drupal_get_path('module', 'twitterfield_pull') . '/views',
+  );
+}
+
+
+/**
+ * Implement hook_form_alter().
+ */
+/*
+function twitterfield_pull_form_alter(&$form, $form_state, $form_id) {
+  // If we're editing a node...
+  if (!empty($form['#node_edit_form'])) {
+    $node_types = variable_get('twitterfield_pull_node_types', array());
+    if (in_array($form['type']['#value'], $node_types)) {
+      //$log = (!$form['nid']['#value']) ? 'New ' . $form['type']['#value'] : '';
+      $form['twitterfield_pull'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Twitter Field Pull'),
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+        '#group' => 'additional_settings',
+        '#weight' => 35,
+      );
+      $form['twitterfield_pull']['track_field_changes'] = array(
+        '#type' => 'select',
+        '#title' => t('Twitter Field Pull frequency'),
+        '#options' => array(
+          60 => t('1 min'),
+          300 => t('5 min'),
+          900 => t('15 min'),
+          1800 => t('30 min'),
+          3600 => t('1 hour'),
+          10800 => t('3 hours'),
+          21600 => t('6 hours'),
+          43200 => t('12 hours'),
+          86400 => t('1 day'),
+          259200 => t('3 day'),
+          604800 => t('1 week'),
+          2419200 => t('4 weeks'),
+        ),
+        '#default_value' => variable_get('twitterfield_pull_update_frequency', 3600),
+        '#description' => t('This is the minimum time that must elapse before new tweets may be downloaded.'),
+        '#weight' => 0,
+      );
+    }
+  }
+}
+*/
+
+
+/**
+ * Implements hook_cron_job_scheduler_info().
+ *
+ * Optionally jobs can declared together with a schedule in a hook_cron_job_scheduler_info().
+ */
+function twitterfield_pull_cron_job_scheduler_info() {
+  $schedulers = array();
+  $schedulers['twitterfield_pull'] = array(
+    'worker callback' => 'twitterfield_pull',
+  );
+  return $schedulers;
+}
+
+
+/**
+ * Scheduler callback for importing a tweet.
+ */
+function twitterfield_pull($job) {
+  _twitterfield_pull_tweet($job);
+}
+
+
+/**
+ * Implements hook_node_insert().
+ */
+function twitterfield_pull_node_insert($node) {
+  _twitterfield_pull_node_save($node);
+}
+
+
+/**
+ * Implements hook_node_update().
+ */
+function twitterfield_pull_node_update($node) {
+  _twitterfield_pull_node_save($node);
+}
+
+
+/**
+ * Implements hook_node_delete().
+ */
+function twitterfield_pull_node_delete($node) {
+  // Delete tweets.
+  db_delete('twitterfield_pull_tweet')
+    ->condition('nid', $node->nid)
+    ->execute();
+  // Delete jobs.
+  db_delete('job_schedule')
+    ->condition('id', $node->nid)
+    ->execute();
+}

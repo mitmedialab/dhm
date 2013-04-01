@@ -1,0 +1,145 @@
+<?php
+
+/**
+ * @file
+ * The Twitterfield Pull install.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function twitterfield_pull_uninstall() {
+  // Clear variables.
+  variable_del('twitterfield_pull_node_types');
+  variable_del('twitterfield_pull_update_frequency');
+  // Clean for each content type.
+  foreach (node_type_get_types() as $type => $content_type) {
+    $setting = variable_del("twitterfield_pull_$type");
+  }
+}
+
+
+/**
+ * Implements hook_schema().
+ */
+function twitterfield_pull_schema() {
+  $schema['twitterfield_pull_tweet'] = array(
+    'description' => "Stores individual Twitter posts.",
+    'fields' => array(
+      'nid' => array(
+        'description' => 'The {node}.nid of link with the twitterfield',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'field_name' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'tid' => array(
+        'description' => "Unique identifier for each {twitter} post.",
+        'type' => 'numeric',
+        'unsigned' => TRUE,
+        'precision' => 20,
+        'scale' => 0,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'timestamp' => array(
+        'description' => "Date and time when the {twitter} post was created in UNIX timestamp format.",
+        'type' => 'int',
+        'unsigned' => FALSE,
+        'length' => 11,
+      ),
+      'text' => array(
+        'description' => "The text of the {twitter} post.",
+        'type' => 'varchar',
+        'length' => 500,
+        'not null' => FALSE,
+      ),
+      'source' => array(
+        'description' => "The application that created the {twitter} post.",
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+      'replyto' => array(
+        'description' => "Reply to screen name.",
+        'type' => 'varchar',
+        'unsigned' => FALSE,
+        'length' => '100',
+      ),
+      'name' => array(
+        'description' => "The user name or hashtag.",
+        'type' => 'varchar',
+        'unsigned' => FALSE,
+        'length' => '50',
+      ),
+      'type' => array(
+        'description' => "User och hashtag.",
+        'type' => 'varchar',
+        'unsigned' => FALSE,
+        'length' => '20',
+      ),
+      'user_id' => array(
+        'description' => "User ID.",
+        'type' => 'int',
+        'unsigned' => FALSE,
+        'length' => 11,
+      ),
+      'user_screen_name' => array(
+        'description' => "User name.",
+        'type' => 'varchar',
+        'unsigned' => FALSE,
+        'length' => '50',
+      ),
+      'user_profile_pic' => array(
+        'description' => "URL to user profile picture on Twitter.",
+        'type' => 'varchar',
+        'unsigned' => FALSE,
+        'length' => '300',
+      ),
+    ),
+    'indexes' => array(
+      'twitterfield_pull_tweet' => array('nid', 'tid'),
+    ),
+  );
+  $schema['twitterfield_pull'] = array(
+    'description' => 'Mark wich twitterfield need to be pull',
+    'fields' => array(
+      'field_name' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'entity_type' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'bundle' => array(
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'frequency' => array(
+        'description' => "Frequency. To be used later",
+        'type' => 'int',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+        'length' => 11,
+      ),
+    ),
+    'indexes' => array(
+      'twitterfield_pull' => array('field_name', 'bundle'),
+    ),
+    'primary key' => array('field_name', 'bundle'),
+  );
+  return $schema;
+}

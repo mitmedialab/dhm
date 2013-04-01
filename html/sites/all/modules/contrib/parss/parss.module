@@ -1,0 +1,192 @@
+<?php
+
+/**
+ * @file
+ * Provides PaRSS field formatter for link fields
+ */
+ 
+define('PARSS_ROWS_DEFAULT', 5);
+define('PARSS_LIST_TYPE_DEFAULT', 'ul');
+define('PARSS_DATE_FORMAT_DEFAULT', 'medium');
+define('PARSS_DESCRIPTIONS_DEFAULT', TRUE);
+/**
+ * Implements hook_theme().
+ */
+function parss_theme() {
+  return array(
+    'parss_formatter' => array(
+      'variables' => array(
+        'item' => NULL, 
+        'rows' => NULL, 
+        'list_type' => NULL, 
+        'date_format' => NULL,
+        'descriptions' => NULL,
+        'delta' => 0
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function parss_field_formatter_info() {
+  $formatters = array(
+    'parss' => array(
+      'label' => t('PaRSS'),
+      'field types' => array('link_field'),
+      'settings' => array(
+        'rows' => PARSS_ROWS_DEFAULT, 
+        'list_type' => PARSS_LIST_TYPE_DEFAULT,
+        'date_format' => PARSS_DATE_FORMAT_DEFAULT,
+        'descriptions' => PARSS_DESCRIPTIONS_DEFAULT,
+      ),
+    ),
+  );
+
+  return $formatters;
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function parss_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  $element['rows'] = array(
+    '#title' => t('Rows'),
+    '#description' => t('Rows to display'),
+    '#type' => 'textfield',
+    '#default_value' => $settings['rows'],
+    '#required' => TRUE,
+    '#size' => 5,
+    '#element_validate' => array('element_validate_integer_positive'),
+  );
+
+  $element['list_type'] = array(
+    '#title' => t('List type'),
+    '#type' => 'select',
+    '#default_value' => $settings['list_type'],
+    '#options' => array(
+      'ul' => t('Unordered list <ul>'),
+      'ol' => t('Ordered list <ol>'),
+    ),
+  );
+  
+  $options = array('' => '<hidden>');
+  foreach (system_get_date_types() as $type => $info) {
+    $options[$type] = $info['title'] .' - '. date(parss_date_type_format_string($type));
+  }
+  $element['date_format'] = array(
+    '#title' => t('Date format'),
+    '#type' => 'select',
+    '#default_value' => $settings['date_format'],
+    '#options' => $options,
+  );
+  
+  $element['descriptions'] = array(
+    '#title' => t('Show descriptions'),
+    '#type' => 'checkbox',
+    '#default_value' => $settings['descriptions'],
+  );
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function parss_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  
+  $list_types = array(
+    'ul' => t('Unordered - &lt;ul&gt;'),
+    'ol' => t('Ordered - &lt;ol&gt;'),
+  );
+  $output[] = 'List type: '. $list_types[$settings['list_type']];
+  
+  $output[] = 'Rows: '. $settings['rows'];
+  
+  $format = system_get_date_types($settings['date_format']);
+  $type = (!empty($format['title'])) ? $format['title'] : 'Hidden';
+  $output[] = 'Date format: '. $type;
+  
+  $desc = ($settings['descriptions']) ? 'Yes' : 'No';
+  $output[] = 'Show Descriptions: '. $desc;
+  
+  return implode('<br />', $output);
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function parss_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $settings = $display['settings'];
+  $element = array();
+
+  foreach ($items as $delta => $item) {
+    $element[$delta] = array(
+      '#theme' => 'parss_formatter',
+      '#item' => $item,
+      '#rows' => $display['settings']['rows'],
+      '#list_type' => $display['settings']['list_type'],
+      '#date_format' => $display['settings']['date_format'],
+      '#descriptions' => $display['settings']['descriptions'],
+      '#delta' => $delta,
+    );
+  }
+
+  return $element;
+}
+
+/**
+ * Returns HTML for PaRSS enabled link field.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - item (array): An array of the field data.
+ *   - url (string): XML feed url
+ *   - rows (int): Amount of rows to display
+ *   - date_format (string): Date format to use
+ *   - descriptions (bool): Whether to display descriptions or not
+ *
+ * @ingroup themeable
+ */
+function theme_parss_formatter($vars) {
+  $id = 'parssFeed'. $vars['delta'];
+  $path = libraries_get_path('parss');
+  $filepath = $path .'/jquery.parss.uncompressed.js';
+  if (file_exists($filepath)) {
+    drupal_add_js($filepath);
+    drupal_add_js(drupal_get_path('module', 'parss') .'/parss.js');
+    $settings['parss_feeds'][$id] = array(
+      'url' => $vars['item']['url'],
+      'rows' => (int)trim($vars['rows']),
+      'date_format' => parss_date_type_format_string($vars['date_format']),
+      'descriptions' => (int)$vars['descriptions'],
+    );
+    drupal_add_js($settings, 'setting');
+  }
+  else {
+    drupal_set_message(t('PaRSS library missing'), 'error');
+  }
+  drupal_add_css('#'. $id .' { display:none; }', 'inline');
+  $output = '<ul id="'. $id .'"></ul>';
+
+  return $output;
+}
+
+/**
+ * Helper function which returns the current date format for the date display type
+ *
+ * @param string $type
+ *  Name of date display type, such as 'long', 'medium', 'short' etc..
+ * @return string
+ *  Date format string
+ */
+function parss_date_type_format_string($type) {
+  $formats = system_get_date_formats($type);
+  return variable_get('date_format_'. $type, key($formats));
+}
+

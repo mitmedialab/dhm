@@ -1,0 +1,196 @@
+/*LOCATION BLOCK*/
+/*add specific border on location block */
+#block-views-locations-block-1 {
+border: 1px solid #f1f1f1;
+padding: 5px;
+background-color: #fff;
+margin-bottom: 10px;
+}
+/*add scroll on location block */
+#block-views-locations-block-1 {
+height: 310px;
+overflow: scroll;
+}
+/*remove paging on location block */
+#block-views-locations-block-1 .item-list .pager{
+border: 1px solid #b91222;
+padding: 5px;
+background-color: #fff;
+margin-bottom: 10px;
+margin-top: 15px;
+visibility: hidden;
+}
+
+/*add specification for links on location block */
+#block-views-locations-block-1 a:link, a:visited, 
+#block-views-c2cf03c1a22e28f94841c88dd5f3026d a:link, a:visited {
+color: #b91222;
+padding-left: 3px;
+}
+/*#block-views-locations-block-1 a:hover, a:active, 
+#block-views-c2cf03c1a22e28f94841c88dd5f3026d a:hover, a:active {
+color: #fff;
+background-color: #b91222;
+width:100%;
+display: inline-block;
+}*/
+
+
+/*CLUSTERS BLOCK*/
+/*add specific border on cluster block */
+#block-views-c2cf03c1a22e28f94841c88dd5f3026d {
+border: 1px solid #f1f1f1;
+padding: 5px;
+background-color: #fff;
+margin-bottom: 10px;
+}
+
+/*add scroll on cluster block */
+#block-views-c2cf03c1a22e28f94841c88dd5f3026d {
+height: 200px;
+overflow: scroll;
+}
+
+/*TO REMOVE PAGE TITLE AND RSS FEED */
+/*remove page title*/
+h1#page-title {
+display: none;
+height: 0;
+}
+/*remove feed icon*/
+div.feed-icon.clearfix {
+display: none;
+height: 0;
+}
+
+
+/*RIGHT PANE BLOCK */
+/*cancel background color and padding for pane.block*/
+#block-system-main, #pane-block, .block {
+padding: 0px;
+background-color: #fff;
+}
+/*align titles for all pane.block*/
+h2.block-title {
+text-align: left;
+}
+
+/*remove color from blocks*/
+aside#region-sidebar-second.grid-6.region {
+    background: none repeat scroll 0 0 #fff;
+}
+ #region-sidebar-second .region-inner.region-sidebar-second-inner {
+background-color: #fff;
+}
+
+/*remove color from titles*/
+#region-sidebar-second .region-inner.region-sidebar-second-inner h2.block-title{
+background-color: #fff;
+}
+
+/*Block views*/
+/*add height on all content for block views*/
+#block-views-maps-view-block-2 .view-content, 
+#block-views-documents-funding-featured .view-content,
+#block-views-documents-cluster-key .view-content{
+height: 250px;
+}
+/*#block-boxes-graphfunding-block .boxes-box-content {
+height: 270px;
+}
+/*align .more-link on all block views*/
+#block-views-maps-view-block-2 .more-link, 
+#block-boxes-graphfunding-block .more-link,
+#block-views-documents-funding-featured .more-link,
+#block-views-documents-cluster-key .more-link{
+margin-top: auto;
+margin-bottom: auto;
+}
+/*add shadow on all block views*/
+#block-views-maps-view-block-2, 
+#block-boxes-graphfunding-block,
+#block-views-documents-funding-featured,
+#block-views-documents-cluster-key {
+border: 1px solid #f1f1f1;
+background-color: #fff;
+margin-bottom: 10px;
+padding: 10px;
+height: 300px;
+box-shadow: 5px 5px 5px #f1f1f1;
+}
+/*center content in block views*/
+#block-views-maps-view-block-2, 
+#boxes-box-graphfunding-block,
+#block-views-documents-funding-featured {
+text-align: center;
+}
+/*center graphfunding in block views*/
+#boxes-box-graphfunding-block, .boxes-box, .boxes-box-content img {
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+
+
+/*MENU TOOLS*/
+/*to hide menu title */
+#block-menu-menu-tools
+h2.block-title, h2.pane-title {
+display: none;
+}
+/*to specify menu dimension */
+#block-menu-menu-tools {
+padding: 20px 0px 0px 0px;
+height: 60px;
+width: 100%;
+}
+
+/*to get horizontal menu */
+#block-menu-menu-tools li {
+display: inline-block;
+height: 70px;
+width: 70px;
+}
+
+#block-menu-menu-tools li a{
+display: inline-block;
+height: 70px;
+width: 70px;
+background-size: 50%;
+text-indent: -9999px;
+}
+/*to add icons to menu items */
+li.leaf.cods a {
+background-image: url("http://wca.humanitarianresponse.info/sites/all/themes/humanitarianresponse/images/cod2.png");
+background-repeat: no-repeat;
+}
+li.leaf.calendar a {
+background-image: url("http://wca.humanitarianresponse.info/sites/all/themes/humanitarianresponse/images/calendar.png");
+background-repeat: no-repeat;
+}
+li.leaf.contact-list a {
+background-image: url("http://wca.humanitarianresponse.info/sites/all/themes/humanitarianresponse/images/contacts.png");
+background-repeat: no-repeat;
+}
+li.leaf.assessments-registry a {
+background-image: url("http://wca.humanitarianresponse.info/sites/all/themes/humanitarianresponse/images/assessment_registry.png");
+background-repeat: no-repeat;
+}
+li.leaf.crf a {
+background-image: url("http://wca.humanitarianresponse.info/sites/all/themes/humanitarianresponse/images/crf.png");
+background-repeat: no-repeat;
+}
+li.leaf.coordination-hubs a {
+background-image: url("http://wca.humanitarianresponse.info/sites/all/themes/humanitarianresponse/images/coordination_hub.png");
+background-repeat: no-repeat;
+}
+li.leaf.media a {
+background-image: url("http://wca.humanitarianresponse.info/sites/all/themes/humanitarianresponse/images/media.png");
+background-repeat: no-repeat;
+}
+li.leaf.humanitarian-profile a {
+background-image: url("http://wca.humanitarianresponse.info/sites/all/themes/humanitarianresponse/images/humanitarian_profile.png");
+background-repeat: no-repeat;
+}
+
+

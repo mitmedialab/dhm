@@ -1,0 +1,8 @@
+/* Home Page */
+.front .region-sidebar-first .block-inner,
+.front .region-sidebar-second .block-inner,
+.front .region-content-second .block-inner {
+  background-color: #F2F2F2;
+  padding-left: 5px;
+  padding-right: 5px;
+}

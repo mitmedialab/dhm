@@ -1,0 +1,40 @@
+/* Default style for website appearance
+This file will hold styles that are loaded using the same media query as the narrow grid. */
+
+/* Show main menu */
+#block-superfish-1 {
+  display: block;
+}
+
+/* Hide select menu */
+#main-menu-mobile {
+  display: none;
+}
+
+/* Front page */
+
+.front #block-views-news-block-2 {
+  height: 369px;
+}
+
+.front #block-views-documents-documents-home-key .view-empty,
+.front #block-views-documents-documents-home-key .view-content,
+.front #block-views-events-block-2 .view-content,
+.front #block-views-events-block-2 .view-empty {
+  height: 315px;
+}
+
+.front #block-views-events-block-2,
+.front #block-views-documents-documents-home-key,
+.front #block-views-news-block-2 {
+  margin-bottom: 15px;
+}
+
+.front #block-views-documents-documents-home-rep .view-empty,
+.front #block-views-documents-documents-home-rep .view-content,
+.front #block-views-maps-view-visuals-home .view-empty,
+.front #block-views-maps-view-visuals-home .view-content,
+.front #block-views-documents-documents-home-feat .view-empty,
+.front #block-views-documents-documents-home-feat .view-content {
+  height: 415px;
+}

@@ -1,0 +1,22 @@
+/* Using larger screen (more than 1024 px)
+This file will hold styles that are loaded using the same media query as the wide grid. */
+
+.front #block-views-news-block-2 {
+  height: 254px;
+}
+
+.front #block-views-documents-documents-home-key .view-empty,
+.front #block-views-documents-documents-home-key .view-content,
+.front #block-views-events-block-2 .view-content,
+.front #block-views-events-block-2 .view-empty {
+  height: 200px;
+}
+
+.front #block-views-documents-documents-home-rep .view-empty,
+.front #block-views-documents-documents-home-rep .view-content,
+.front #block-views-maps-view-visuals-home .view-empty,
+.front #block-views-maps-view-visuals-home .view-content,
+.front #block-views-documents-documents-home-feat .view-empty,
+.front #block-views-documents-documents-home-feat .view-content {
+  height: 260px;
+}

@@ -1,0 +1,30 @@
+###########
+## PaRSS ##
+###########
+
+MODULE DEPENDENCIES:
+ - Link:                  http://drupal.org/project/link
+ - Libraries API:         http://drupal.org/project/libraries
+
+3RD PARTY LIBRARIES
+ - PaRSS jQuery Library:  http://nicksantamaria.net/article/rehosting-parss-jquery-library
+                          (Rehosted due to plugins.jquery.com being out of service)
+
+INSTALLATION:
+ 1. Download this module and all it's dependencies
+ 2. Enable module and dependencies as-per normal
+ 3. Download the PaRSS jQuery library to sites/all/libraries/parss
+ 4. Ensure the following filepath is valid:
+     sites/all/libraries/parss/jquery.parss.uncompressed.js
+
+CONFIGURATION:
+ 1. Add and configure some link fields using link.module
+ 2. Go to the display settings for that field
+ 3. Change the formatter to "PaRSS"
+ 4. Adjust the configuration of the formatter by clicking the cog. 
+    Settings include:
+     - Number of rows from the RSS feed to display
+     - List type to use (ul / ol)
+     - Date format options
+     - Show descriptions?
+ 5. Click "Update"
