@@ -413,7 +413,8 @@ function theme_checkbox_tree_item($variables) {
     $output .= "<div class='term-reference-tree-button$sm'></div>";
   }
   elseif (!$element['#leaves_only']) {
-    $output .= "<div class='no-term-reference-tree-button'></div>";
+    $id = $element['#id'];
+    $output .= "<div id='icon-$id' class='no-term-reference-tree-button'></div>";
   }
 
   foreach($children as $child) {

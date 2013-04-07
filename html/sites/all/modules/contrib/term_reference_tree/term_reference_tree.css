@@ -124,3 +124,60 @@
 .field-widget-term-reference-tree ul {
   margin-top: 0;
 }
+
+#icon-edit-field-skills-und-0-78 {
+  background-image: url('images/final_set/human_needs.png');
+}
+#icon-edit-field-skills-und-0-67 {
+  background-image: url('images/final_set/volunteer_team_coordination_and_leadership_100px.png');
+}
+#icon-edit-field-skills-und-0-66 {
+  background-image: url('images/final_set/2data_entry.png');
+}
+#icon-edit-field-skills-und-0-64 {
+  background-image: url('images/final_set/data.png');
+}
+#icon-edit-field-skills-und-0-68 {
+  background-image: url('images/final_set/donation.png');
+}
+#icon-edit-field-skills-und-0-71 {
+  background-image: url('images/final_set/amplification.png');
+}
+#icon-edit-field-skills-und-0-76 {
+  background-image: url('images/final_set/legal_assistance.png');
+}
+#icon-edit-field-skills-und-0-63 {
+  background-image: url('images/final_set/mapping.png');
+}
+#icon-edit-field-skills-und-0-65 {
+  background-image: url('images/final_set/2monitor_media.png');
+}
+#icon-edit-field-skills-und-0-69 {
+  background-image: url('images/final_set/organizational_support.png');
+}
+#icon-edit-field-skills-und-0-74 {
+  background-image: url('images/final_set/2software-dev.png');
+}
+#icon-edit-field-skills-und-0-77 {
+  background-image: url('images/final_set/statistical_analysis.png');
+}
+#icon-edit-field-skills-und-0-75 {
+  background-image: url('images/final_set/technical_support.png');
+}
+#icon-edit-field-skills-und-0-73 {
+  background-image: url('images/final_set/2translation.png');
+}
+#icon-edit-field-skills-und-0-70 {
+  background-image: url('images/final_set/visual_work.png');
+}
+#icon-edit-field-skills-und-0-72 {
+  background-image: url('images/final_set/writing_and_storytelling_and_reporting.png');
+}
+
+
+.no-term-reference-tree-button {
+  background-size: 50px 50px;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 5px;
+}
