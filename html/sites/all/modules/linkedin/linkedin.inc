@@ -42,7 +42,6 @@ function linkedin_access_token($account) {
     $request->set_parameter("oauth_callback", $callback);
     $request->sign_request($signature, $consumer, NULL);
     $header = $request->to_header();
-    dpm($header);
     $response = _linkedin_http_request($url, $header, 'token_request');
     parse_str($response, $oauth);
     if (isset($oauth['oauth_problem'])) {

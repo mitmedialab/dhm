@@ -414,10 +414,11 @@ function theme_checkbox_tree_item($variables) {
   }
   elseif (!$element['#leaves_only']) {
     $id = $element['#id'];
+
     $output .= "<div id='icon-$id' class='no-term-reference-tree-button'></div>";
   }
 
-  foreach($children as $child) {
+  foreach ($children as $child) {
     $output .= drupal_render($element[$child]);
   }
   
