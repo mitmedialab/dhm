@@ -1,3 +1,18 @@
+.term-reference-tree-skill-li 
+{
+  width: 225px;
+  min-height: 50px;
+  border: 1px solid #000;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: top;
+  zoom: 1;
+  *display: inline;
+}
+  
+
+
+
 .item-list .field-widget-term-reference-tree ul,
 .block .field-widget-term-reference-tree ul,
 .field-widget-term-reference-tree ul

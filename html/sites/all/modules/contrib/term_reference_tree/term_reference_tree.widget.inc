@@ -388,7 +388,7 @@ function theme_checkbox_tree_level($variables) {
   $output = "<ul class='term-reference-tree-level '$sm>";
   $children = element_children($element);
   foreach($children as $child) {
-    $output .= "<li>";
+    $output .= "<li class='term-reference-tree-skill-li'>";
     $output .= drupal_render($element[$child]);
     $output .= "</li>";
   }

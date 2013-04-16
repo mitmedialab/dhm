@@ -196,7 +196,6 @@ function _linkedin_get_profile_fields($uid, $fields = array()) {
   }
   $tokens = (array) $tokens;
   $append .= _linkedin_build_fields_request($fields, $type);
-  dpm($append);
   $url = $base_url . $append;
   $response = linkedin_get_fields($url, $tokens);
 
