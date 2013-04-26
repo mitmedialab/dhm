@@ -122,7 +122,27 @@ function linkedin_access_token($account) {
       );
       drupal_write_record('linkedin_token', $sql, array('uid'));
       //associate LinkedIn ID with uid for future use
-      $id = linkedin_get_profile_fields($account->uid, array('id'), TRUE);
+      $id = linkedin_get_profile_fields($account->uid, array('id','skills'), TRUE); 
+
+      //unpack and write the linked_in skills to the user's account
+      if (array_key_exists('skills', $id) && array_key_exists('skill', $id['skills'])) {
+        $skills = '';
+        foreach ($id['skills']['skill'] as $skill) {
+          $skills = $skills . ", " . $skill['skill']['name'];
+        }
+        $skills = trim($skills, ",");
+        $edit = array(
+          'field_linkedin_skills' => array(
+            'und' => array(
+              0 => array(
+                'value' => $skills,
+              ),
+            ),
+          ),
+        );
+        user_save($account, $edit); 
+      }
+
       user_set_authmaps($account, array('authmap_linkedin' => $id['id']));
       drupal_goto("user/$account->uid/edit/linkedin");
     }
